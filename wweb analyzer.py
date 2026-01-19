@@ -113,9 +113,13 @@ else:
     try:
         # Read file
         if uploaded_file.name.endswith('.csv'):
-            df = pd.read_csv(uploaded_file)
-        else:
-            df = pd.read_excel(uploaded_file)
+        df = pd.read_csv(uploaded_file)
+    else:
+        df = pd.read_excel(uploaded_file, engine='openpyxl')
+except Exception as e:
+    st.error(f"Error reading file: {str(e)}")
+    st.info("Tip: Try converting your Excel file to CSV format and upload again")
+    st.stop()
 
         # Validate columns
         required_columns = ['GENCO/ERD', 'BENEFICIARIES', 'FUND', 'AMOUNT']
@@ -295,3 +299,4 @@ st.markdown("""
         <p>Fund Analyzer Pro | Built with Streamlit</p>
     </div>
 """, unsafe_allow_html=True)
+
