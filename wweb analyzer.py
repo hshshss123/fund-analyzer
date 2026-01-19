@@ -117,6 +117,9 @@ else:
         else:
             df = pd.read_excel(uploaded_file, engine='openpyxl')
         
+        # Clean column names - remove leading/trailing spaces
+        df.columns = df.columns.str.strip()
+        
         # Validate columns
         required_columns = ['GENCO/ERD', 'BENEFICIARIES', 'FUND', 'AMOUNT']
         missing_cols = [col for col in required_columns if col not in df.columns]
@@ -291,3 +294,4 @@ st.markdown("""
         <p>Fund Analyzer Pro | Built with Streamlit</p>
     </div>
 """, unsafe_allow_html=True)
+
